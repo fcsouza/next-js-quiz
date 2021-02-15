@@ -8,15 +8,16 @@ import QuizBackground from '../src/components/QuizBackground';
 import QuizContainer from '../src/components/QuizContainer';
 import Button from '../src/components/Button';
 import AlternativesForm from '../src/components/AlternativesForm';
+import BackLinkArrow from '../src/components/BackLinkArrow';
 
 function LoadingWidget(){
   return (
     <Widget>
       <Widget.Header>
-        Carregando...
+        Loading...
       </Widget.Header>
       <Widget.Content>
-        Desafio do Loading
+       loading....
       </Widget.Content>
     </Widget>
   );
@@ -28,17 +29,17 @@ function ResultWidget({ results }) {
   return (
     <Widget>
       <Widget.Header>
-        Tela de Resultado:
+        Results:
       </Widget.Header>
 
       <Widget.Content>
         <p>
         {` ${router.query["name"]}, você acertou `}
           {' '}
-
+          {}
           {results.filter((x) => x).length}
           {' '}
-          perguntas
+          questions
         </p>
         <ul>
           {results.map((result, index) => (
@@ -46,7 +47,7 @@ function ResultWidget({ results }) {
               #
               {index + 1}
               {' '}
-              Resultado:
+              result:
               {result === true
                 ? 'Acertou'
                 : 'Errou'}
@@ -74,17 +75,17 @@ function QuestionWidget({  question,  questionIndex,  totalQuestions,  onSubmit,
   return (
     <Widget>
       <Widget.Header>
-        {/* <BackLinkArrow href="/" /> */}
+        <BackLinkArrow href="/" />
         <h3>
-          {`Pergunta ${questionIndex + 1} de ${totalQuestions}`}
+          {`Question ${questionIndex + 1} de ${totalQuestions}`}
         </h3>
       </Widget.Header>
 
       <img
-        alt="Descrição"
+        alt="description"
         style={{
          width: '100%',
-          height: '150px',
+          height: '313px',
           objectFit: 'cover',
         }}
         src={question.image}
@@ -137,10 +138,10 @@ function QuestionWidget({  question,  questionIndex,  totalQuestions,  onSubmit,
             {JSON.stringify(question, null, 4)}
           </pre> */}
           <Button type="submit" disabled={!hasAlternativeSelected}>
-            Confirmar
+            Submit
           </Button>
-          {isQuestionSubmited && isCorrect && <p>Você acertou!</p>}
-          {isQuestionSubmited && !isCorrect && <p>Você errou!</p>}
+          {isQuestionSubmited && isCorrect && <p>You're right!</p>}
+          {isQuestionSubmited && !isCorrect && <p>You missed!</p>}
         </AlternativesForm>        
       </Widget.Content>
     </Widget>
