@@ -17,6 +17,7 @@ import Button from '../src/components/Button';
 import { Lottie } from '@crello/react-lottie';
 
 import loadingAnimation from '../src/screens/Quiz/animations/890-loading-animation.json';
+import { func } from 'prop-types';
 
 
 const QuizContainer = styled.div`
@@ -34,16 +35,18 @@ export default function Home() {
   const router = useRouter();
   const [name, setName] = React.useState('');
 
+  function validacaoNome(e){
+    if(name.length == 0)
+      e.preventDefault();
+  }
+
   return (
     <QuizBackground backgroundImage={db.bg}>
       <Head>
-        <title>
-          AluraQuiz -
-          {db.title}
-        </title>
+        <title>AluraQuiz - {db.title}</title>
       </Head>
       <QuizContainer>
-        <QuizLogo />
+        <QuizLogo href="/"/>
         <Widget
           as={motion.section}
           transition={{ delay: 0, duration: 0.5 }}
@@ -57,16 +60,8 @@ export default function Home() {
           <Widget.Header>
             <h1>{db.title}</h1>
           </Widget.Header>
+
           <Widget.Content>
-
-          <Lottie
-            width="200px"
-            height="200px"
-            className="lottie-container basic"
-            config={{ animationData: loadingAnimation, loop: true, autoplay: true }}
-          />
-
-
             <p>{db.description}</p>
             <form onSubmit={function (infosDoEvento) {
               infosDoEvento.preventDefault();
@@ -111,6 +106,7 @@ export default function Home() {
                   <li key={linkExterno}>
                     <Widget.Topic
                       as={Link}
+                      onClick={validacaoNome}
                       href={`/quiz/${projectName}___${githubUser}`}
                     >
                       {`${githubUser}/${projectName}`}

@@ -9,6 +9,9 @@ import QuizContainer from '../src/components/QuizContainer';
 import Button from '../src/components/Button';
 import AlternativesForm from '../src/components/AlternativesForm';
 import BackLinkArrow from '../src/components/BackLinkArrow';
+import { Lottie } from '@crello/react-lottie';
+
+import loadingAnimation from '../src/screens/Quiz/animations/890-loading-animation.json';
 
 function LoadingWidget(){
   return (
@@ -16,8 +19,13 @@ function LoadingWidget(){
       <Widget.Header>
         Loading...
       </Widget.Header>
-      <Widget.Content>
-       loading....
+      <Widget.Content style={{ display: 'flex', justifyContent: 'center' }}>
+        <Lottie
+          width="200px"
+          height="200px"
+          className="lottie-container basic"
+          config={{ animationData: loadingAnimation, loop: false, autoplay: true, }}
+        />
       </Widget.Content>
     </Widget>
   );
@@ -29,14 +37,13 @@ function ResultWidget({ results }) {
   return (
     <Widget>
       <Widget.Header>
-        Results:
+       Results:
       </Widget.Header>
 
       <Widget.Content>
         <p>
         {` ${router.query["name"]}, você acertou `}
           {' '}
-          {}
           {results.filter((x) => x).length}
           {' '}
           questions
@@ -47,10 +54,10 @@ function ResultWidget({ results }) {
               #
               {index + 1}
               {' '}
-              result:
+              Result:
               {result === true
-                ? 'Acertou'
-                : 'Errou'}
+                ? ' correct'
+                : ' wrong'}
             </li>
           ))}
         </ul>
@@ -77,20 +84,21 @@ function QuestionWidget({  question,  questionIndex,  totalQuestions,  onSubmit,
       <Widget.Header>
         <BackLinkArrow href="/" />
         <h3>
-          {`Question ${questionIndex + 1} de ${totalQuestions}`}
+          {`Question ${questionIndex + 1} of ${totalQuestions}`}
         </h3>
       </Widget.Header>
 
       <img
-        alt="description"
+        alt="image"
         style={{
          width: '100%',
-          height: '313px',
+          height: '350px',
           objectFit: 'cover',
         }}
         src={question.image}
       />
-      <Widget.Content>
+
+      <Widget.Content>        
         <h2>
           {question.title}
         </h2>
@@ -138,10 +146,10 @@ function QuestionWidget({  question,  questionIndex,  totalQuestions,  onSubmit,
             {JSON.stringify(question, null, 4)}
           </pre> */}
           <Button type="submit" disabled={!hasAlternativeSelected}>
-            Submit
+            Confirmar
           </Button>
-          {isQuestionSubmited && isCorrect && <p>You're right!</p>}
-          {isQuestionSubmited && !isCorrect && <p>You missed!</p>}
+          {isQuestionSubmited && isCorrect && <p>Você acertou!</p>}
+          {isQuestionSubmited && !isCorrect && <p>Você errou!</p>}
         </AlternativesForm>        
       </Widget.Content>
     </Widget>
@@ -183,7 +191,7 @@ export default function QuizPage(){
   return (
     <QuizBackground backgroundImage={db.bg}>
       <QuizContainer>
-        <QuizLogo />
+        <QuizLogo href="/"/>
         {screenState === screenStates.QUIZ && (
           <QuestionWidget
             question={question}
